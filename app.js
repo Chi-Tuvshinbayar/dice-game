@@ -35,12 +35,41 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
         roundScore = 0;
         document.getElementById('current-' + activePlayer).textContent = roundScore;
         
-        // Тоглогчийн ээлжийг нөгөө тоглогч руу шилжүүлнэ.
+        // Тоглогчийн ээлжийг нөгөө тоглогч руу шилжүүлэх.
+        switchToNextPlayer();
+    }
+});
+
+// HOLD товчний event listener
+document.querySelector('.btn-hold').addEventListener('click', function(){
+    // Уг тоглогчийн цуглуулсан ээлжний оноог глобаль оноо дээр нь нэмнэ.
+    scores[activePlayer] = scores[activePlayer] + roundScore;
+
+    // Дэлгэц дээрх тоог өөрчилнө.
+    document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
+
+    // Уг тоглогч хожсон эсэхийг (оноо нь 100-с их эсэх) шалгах
+    if (scores[activePlayer] >= 10){
+        // Ялагч гэсэн текстийг нэрний оронд WINNER гаргана.
+        document.getElementById('name-' + activePlayer).textContent = 'WINNER!!!';
+        document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+    } else {
+    // Тоглогчийн ээлжийг солино.
+    switchToNextPlayer();
+    }
+    // Ээлжийн оноог 0 болгоно.
+    roundScore = 0;
+    document.getElementById('current-' + activePlayer).textContent = roundScore;
+});
+
+// Энэ функц нь тоглох ээлжийг дараачийн тоглогч руу шилжүүлдэг
+function switchToNextPlayer(){
+// Тоглогчийн ээлжийг нөгөө тоглогч руу шилжүүлнэ.
         // Хэрэв идэвхтэй тологч нь 0 байвал идэвхтэй тоглогчийг 1 болго.
         // Хэрэв идэвхтэй тологч нь 1 байвал идэвхтэй тоглогчийг 0 болго.
-        
         activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
-        /* if(activePlayer === 0){
+            /* if(activePlayer === 0){
             activePlayer = 1;
         } else {
             activePlayer = 0;
@@ -52,5 +81,7 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
 
         // Шоог түр алга болгоно.
         diceDom.style.display = 'none';
-    }
-});
+}
+
+// Шинэ тоглоом эхлүүлэх 
+document.querySelector('.btn-new').addEventListener();
